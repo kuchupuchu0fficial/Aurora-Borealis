@@ -1,25 +1,1183 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My First HTML Page</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      padding: 40px;
-    }
-    h1 {
-      color: #333;
-    }
-    p {
-      color: #555;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0d12">
+<title>Chromatic — Premium Color Studio</title>
+
+<style>
+:root {
+  --bg: #0b0d12;
+  --surface: #12151d;
+  --surface-2: #191d27;
+  --border: #292e3b;
+  --text: #f5f6fa;
+  --muted: #9ba3b5;
+  --accent: #a78bfa;
+  --radius: 18px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: Inter, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+button, input { font: inherit; }
+button { cursor: pointer; }
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  width: min(1160px, 92%);
+  margin: auto;
+}
+
+header {
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(11,13,18,.92);
+  backdrop-filter: blur(16px);
+}
+
+.nav {
+  min-height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: 850;
+  letter-spacing: -1px;
+}
+
+.logo span { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.hero {
+  padding: 90px 0 60px;
+  text-align: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  color: var(--accent);
+  border: 1px solid #45386a;
+  background: #171326;
+  border-radius: 100px;
+  padding: 6px 13px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 7vw, 76px);
+  line-height: 1.08;
+  letter-spacing: -3px;
+  max-width: 850px;
+  margin: 25px auto 18px;
+}
+
+.gradient-text {
+  background: linear-gradient(100deg, #a78bfa, #67e8f9, #86efac);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.hero p {
+  color: var(--muted);
+  max-width: 650px;
+  margin: auto;
+  font-size: 17px;
+}
+
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.btn {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 18px;
+  background: var(--surface);
+  color: var(--text);
+  transition: .2s;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #151020;
+  font-weight: 750;
+}
+
+.section {
+  padding: 48px 0;
+  scroll-margin-top: 90px;
+}
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.section-heading h2 {
+  font-size: clamp(27px, 4vw, 38px);
+  letter-spacing: -1px;
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 24px;
+}
+
+.filter {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  border-radius: 100px;
+  padding: 8px 14px;
+  font-size: 13px;
+}
+
+.filter.active {
+  color: #171020;
+  background: var(--accent);
+  border-color: var(--accent);
+  font-weight: 700;
+}
+
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.palette-card {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 13px;
+  transition: transform .2s, border-color .2s;
+  min-width: 0;
+}
+
+.palette-card:hover {
+  transform: translateY(-4px);
+  border-color: #57516d;
+}
+
+.swatches {
+  display: flex;
+  height: 135px;
+  overflow: hidden;
+  border-radius: 11px;
+}
+
+.swatch {
+  flex: 1;
+  position: relative;
+  border: 0;
+  min-width: 0;
+  transition: flex .2s;
+}
+
+.swatch:hover { flex: 1.5; }
+
+.swatch span {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,.5);
+  color: white;
+  border-radius: 5px;
+  padding: 3px 5px;
+  font-size: 10px;
+  opacity: 0;
+  white-space: nowrap;
+}
+
+.swatch:hover span { opacity: 1; }
+
+.palette-info {
+  padding: 13px 2px 2px;
+}
+
+.palette-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 10px;
+}
+
+.palette-top h3 { font-size: 16px; }
+
+.palette-info p {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.tag {
+  font-size: 10px;
+  color: #d0c2ff;
+  background: #29213d;
+  padding: 4px 8px;
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 13px;
+}
+
+.small-btn {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  flex: 1;
+}
+
+.small-btn:hover { border-color: var(--accent); }
+
+.panel {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+
+.studio-grid {
+  display: grid;
+  grid-template-columns: .9fr 1.1fr;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.control-group { margin-bottom: 20px; }
+
+.control-group label {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.control-group select,
+.control-group input[type="color"] {
+  width: 100%;
+  min-height: 45px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: var(--surface-2);
+  color: var(--text);
+  padding: 8px 10px;
+}
+
+.control-group input[type="color"] {
+  cursor: pointer;
+  height: 50px;
+}
+
+.ratio-list { margin: 18px 0; }
+
+.ratio-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  margin: 12px 0 6px;
+}
+
+.ratio-track {
+  background: #292e3b;
+  border-radius: 100px;
+  height: 8px;
+  overflow: hidden;
+}
+
+.ratio-fill {
+  height: 100%;
+  border-radius: inherit;
+}
+
+.preview {
+  background: #f8fafc;
+  color: #101828;
+  border-radius: 13px;
+  overflow: hidden;
+  min-height: 350px;
+  display: flex;
+  flex-direction: column;
+  transition: background .2s, color .2s;
+}
+
+.preview-nav {
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(128,128,128,.25);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.preview-nav span:last-child {
+  font-size: 11px;
+  opacity: .7;
+}
+
+.preview-content { padding: 34px 25px; }
+
+.preview-content .preview-label {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.preview-content h3 {
+  font-size: clamp(28px, 4vw, 43px);
+  line-height: 1.08;
+  letter-spacing: -1.5px;
+  margin: 12px 0;
+}
+
+.preview-content p {
+  font-size: 14px;
+  max-width: 420px;
+  opacity: .8;
+}
+
+.preview-button {
+  display: inline-block;
+  border: 0;
+  padding: 11px 15px;
+  border-radius: 8px;
+  margin-top: 20px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.preview-note {
+  font-size: 11px;
+  opacity: .7;
+  margin-top: 15px;
+}
+
+.preview-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.preview-card {
+  padding: 14px;
+  border-radius: 9px;
+  border: 1px solid rgba(128,128,128,.25);
+}
+
+.preview-card strong { display: block; font-size: 13px; }
+.preview-card small { font-size: 11px; opacity: .7; }
+
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.tip {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.tip-icon {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.tip h3 { font-size: 16px; margin-bottom: 8px; }
+
+.tip p {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.tip code {
+  color: #d0c2ff;
+  font-size: 12px;
+}
+
+.ratio-explainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+  align-items: center;
+}
+
+.ratio-visual {
+  display: flex;
+  overflow: hidden;
+  border-radius: 12px;
+  height: 170px;
+}
+
+.ratio-visual div {
+  display: flex;
+  align-items: end;
+  padding: 12px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.ratio-60 { flex: 6; }
+.ratio-30 { flex: 3; }
+.ratio-10 { flex: 1; }
+
+.ratio-copy h3 { font-size: 23px; margin-bottom: 12px; }
+
+.ratio-copy p {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.accessibility-result {
+  padding: 14px;
+  border-radius: 10px;
+  margin-top: 15px;
+  font-size: 13px;
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+footer {
+  margin-top: 45px;
+  padding: 30px 0;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  text-align: center;
+}
+
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 20px);
+  background: #f5f6fa;
+  color: #111827;
+  padding: 11px 18px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  opacity: 0;
+  pointer-events: none;
+  transition: .25s;
+  z-index: 50;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+@media (max-width: 850px) {
+  .palette-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tips-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .studio-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 560px) {
+  .nav { min-height: 65px; }
+  .nav-links { gap: 12px; font-size: 12px; }
+  .hero { padding: 65px 0 35px; }
+  .hero h1 { letter-spacing: -2px; }
+  .palette-grid, .tips-grid, .ratio-explainer { grid-template-columns: 1fr; }
+  .section-heading { align-items: start; flex-direction: column; }
+  .swatches { height: 120px; }
+  .panel { padding: 17px; }
+}
+</style>
 </head>
+
 <body>
-  <h1>Hello, world!</h1>
-  <p>This is a basic HTML page.</p>
-  <button onclick="alert('Button clicked!')">Click me</button>
+
+<header>
+  <div class="container nav">
+    <a class="logo" href="#">CHROMATIC<span>.</span></a>
+    <nav class="nav-links">
+      <a href="#palettes">Palettes</a>
+      <a href="#studio">Live Studio</a>
+      <a href="#tips">Design Tips</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero container">
+    <span class="eyebrow">The Color Design Toolkit</span>
+    <h1>Choose colors.<br><span class="gradient-text">Create an experience.</span></h1>
+    <p>
+      Discover premium color combinations for websites, brands and portfolios.
+      Explore curated palettes, copy HEX codes and preview your design in real time.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="#palettes">Explore Palettes ↓</a>
+      <a class="btn" href="#studio">Open Live Studio ↗</a>
+    </div>
+  </section>
+
+  <section class="section container" id="palettes">
+    <div class="section-heading">
+      <div>
+        <h2>Curated Color Palettes</h2>
+        <p>Choose a category. Find your visual identity.</p>
+      </div>
+      <button class="btn" id="randomBtn">✦ Random Palette</button>
+    </div>
+
+    <div class="toolbar" id="filters">
+      <button class="filter active" data-filter="All">All</button>
+      <button class="filter" data-filter="Luxury">Luxury</button>
+      <button class="filter" data-filter="Technology">Technology</button>
+      <button class="filter" data-filter="Nature">Nature</button>
+      <button class="filter" data-filter="Healthcare">Healthcare</button>
+      <button class="filter" data-filter="Creative">Creative</button>
+      <button class="filter" data-filter="Minimal">Minimal</button>
+      <button class="filter" data-filter="Food">Food</button>
+      <button class="filter" data-filter="Fintech">Fintech</button>
+    </div>
+
+    <div class="palette-grid" id="paletteGrid"></div>
+  </section>
+
+  <section class="section container" id="studio">
+    <div class="section-heading">
+      <div>
+        <h2>Live Color Studio</h2>
+        <p>Change colors and instantly see how a website could look.</p>
+      </div>
+    </div>
+
+    <div class="studio-grid">
+      <div class="panel">
+        <div class="control-group">
+          <label for="presetSelect">Start with a palette</label>
+          <select id="presetSelect"></select>
+        </div>
+
+        <div class="control-group">
+          <label for="backgroundPicker">Background color</label>
+          <input type="color" id="backgroundPicker" value="#F8FAFC">
+        </div>
+
+        <div class="control-group">
+          <label for="surfacePicker">Card / surface color</label>
+          <input type="color" id="surfacePicker" value="#FFFFFF">
+        </div>
+
+        <div class="control-group">
+          <label for="textPicker">Main text color</label>
+          <input type="color" id="textPicker" value="#101828">
+        </div>
+
+        <div class="control-group">
+          <label for="accentPicker">Primary / button color</label>
+          <input type="color" id="accentPicker" value="#465FFF">
+        </div>
+
+        <div class="control-group">
+          <label for="accentTextPicker">Text on primary button</label>
+          <input type="color" id="accentTextPicker" value="#FFFFFF">
+        </div>
+
+        <div class="card-actions">
+          <button class="small-btn" id="resetStudio">Reset</button>
+          <button class="small-btn" id="copyCss">Copy CSS Variables</button>
+        </div>
+
+        <div class="accessibility-result" id="contrastResult">
+          Select colors to check text contrast.
+        </div>
+      </div>
+
+      <div class="preview" id="preview">
+        <div class="preview-nav" id="previewNav">
+          <span>YOUR BRAND</span>
+          <span>About &nbsp; Services &nbsp; Contact</span>
+        </div>
+        <div class="preview-content">
+          <div class="preview-label" id="previewLabel">Design with intention</div>
+          <h3 id="previewHeading">Simple colors.<br>Stronger identity.</h3>
+          <p id="previewParagraph">
+            Create a consistent visual experience with carefully selected
+            colors, clear typography and thoughtful spacing.
+          </p>
+          <button class="preview-button" id="previewButton">Explore more ↗</button>
+          <div class="preview-cards" id="previewCards">
+            <div class="preview-card">
+              <strong>Thoughtful design</strong>
+              <small>Clarity in every detail.</small>
+            </div>
+            <div class="preview-card">
+              <strong>Consistent colors</strong>
+              <small>One unified experience.</small>
+            </div>
+          </div>
+          <div class="preview-note">LIVE PREVIEW · EXAMPLE LAYOUT</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="section-heading">
+      <div>
+        <h2>The 60–30–10 Rule</h2>
+        <p>A practical starting point for balanced color distribution.</p>
+      </div>
+    </div>
+
+    <div class="panel ratio-explainer">
+      <div class="ratio-visual">
+        <div class="ratio-60" style="background:#F8FAFC;color:#101828">60%</div>
+        <div class="ratio-30" style="background:#101828;color:#FFFFFF">30%</div>
+        <div class="ratio-10" style="background:#465FFF;color:#FFFFFF">10%</div>
+      </div>
+      <div class="ratio-copy">
+        <h3>Balance creates hierarchy.</h3>
+        <p><strong>60% — Dominant:</strong> Main background and large visual areas.</p>
+        <p><strong>30% — Secondary:</strong> Cards, sections and supporting surfaces.</p>
+        <p><strong>10% — Accent:</strong> Primary buttons, links and important highlights.</p>
+        <p>Use this as a guideline, not a strict requirement. Text, imagery and layout also affect the perceived ratio.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container" id="tips">
+    <div class="section-heading">
+      <div>
+        <h2>Color Design Principles</h2>
+        <p>Practical principles for making simple websites feel more polished.</p>
+      </div>
+    </div>
+
+    <div class="tips-grid">
+      <article class="tip">
+        <div class="tip-icon">◈</div>
+        <h3>1. Define color roles</h3>
+        <p>Assign separate roles to backgrounds, surfaces, text, borders and actions. Consistent roles make large websites easier to maintain.</p>
+      </article>
+
+      <article class="tip">
+        <div class="tip-icon">◉</div>
+        <h3>2. Use psychology carefully</h3>
+        <p>Blue can communicate stability, green can suggest nature and muted gold can support luxury branding. Context and audience matter more than stereotypes.</p>
+      </article>
+
+      <article class="tip">
+        <div class="tip-icon">✦</div>
+        <h3>3. Limit accent colors</h3>
+        <p>One dominant accent is often enough. Reserve it for meaningful actions instead of coloring every element.</p>
+      </article>
+
+      <article class="tip">
+        <div class="tip-icon">▤</div>
+        <h3>4. Check contrast</h3>
+        <p>Normal text generally needs a WCAG contrast ratio of at least 4.5:1. Large text generally needs 3:1. Test real text and backgrounds.</p>
+      </article>
+
+      <article class="tip">
+        <div class="tip-icon">◐</div>
+        <h3>5. Design for dark mode</h3>
+        <p>Don't simply invert every color. Use layered surfaces, readable muted text and restrained accents. Test contrast again.</p>
+      </article>
+
+      <article class="tip">
+        <div class="tip-icon">◎</div>
+        <h3>6. Keep the whole UI consistent</h3>
+        <p>Apply the same design tokens to buttons, links, forms, cards, hover states and focus indicators. Color alone should never communicate status.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="panel">
+      <h2 style="margin-bottom:12px">A professional color workflow</h2>
+      <p style="color:var(--muted);font-size:14px">
+        01. Identify the brand and audience.
+        &nbsp; 02. Select a category and mood.
+        &nbsp; 03. Choose a palette.
+        &nbsp; 04. Assign semantic color roles.
+        &nbsp; 05. Preview actual components.
+        &nbsp; 06. Check contrast and keyboard focus.
+        &nbsp; 07. Test with users and refine.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    CHROMATIC. — A practical color exploration toolkit.
+    <br>Palette choices are design suggestions, not guaranteed psychological outcomes.
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+const palettes = [
+  {
+    name: "Obsidian Gold",
+    category: "Luxury",
+    mood: "Elegant · Exclusive",
+    colors: ["#171717", "#292929", "#F5F0E8", "#C6A96B", "#A7A29A"]
+  },
+  {
+    name: "Midnight Executive",
+    category: "Luxury",
+    mood: "Refined · Professional",
+    colors: ["#111827", "#1F2937", "#F9FAFB", "#D4AF77", "#9CA3AF"]
+  },
+  {
+    name: "Royal Minimal",
+    category: "Luxury",
+    mood: "Premium · Restrained",
+    colors: ["#18181B", "#27272A", "#FAFAF9", "#B89B72", "#A1A1AA"]
+  },
+  {
+    name: "Electric Future",
+    category: "Technology",
+    mood: "Futuristic · Precise",
+    colors: ["#0B1020", "#151D32", "#F3F5FC", "#7C8CFF", "#42D9C8"]
+  },
+  {
+    name: "SaaS Clarity",
+    category: "Technology",
+    mood: "Trust · Simplicity",
+    colors: ["#101828", "#1D2939", "#F8FAFC", "#465FFF", "#12B76A"]
+  },
+  {
+    name: "Cyber Night",
+    category: "Technology",
+    mood: "Bold · Digital",
+    colors: ["#09090B", "#18181B", "#FAFAFA", "#A3E635", "#38BDF8"]
+  },
+  {
+    name: "Forest Calm",
+    category: "Nature",
+    mood: "Natural · Grounded",
+    colors: ["#1B4332", "#2D6A4F", "#F7F5EF", "#A3B18A", "#8C6A43"]
+  },
+  {
+    name: "Sage Retreat",
+    category: "Nature",
+    mood: "Soft · Organic",
+    colors: ["#344E41", "#588157", "#F1F5EB", "#DAD7CD", "#A3B18A"]
+  },
+  {
+    name: "Earth & Clay",
+    category: "Nature",
+    mood: "Warm · Authentic",
+    colors: ["#493628", "#6F4E37", "#F5EFE6", "#C89F7B", "#A3A380"]
+  },
+  {
+    name: "Clinical Calm",
+    category: "Healthcare",
+    mood: "Clear · Reassuring",
+    colors: ["#115E59", "#134E4A", "#FFFFFF", "#0EA5E9", "#CCFBF1"]
+  },
+  {
+    name: "Fresh Wellness",
+    category: "Healthcare",
+    mood: "Clean · Gentle",
+    colors: ["#164E63", "#155E75", "#F0FDFA", "#5EEAD4", "#64748B"]
+  },
+  {
+    name: "Lavender Dream",
+    category: "Creative",
+    mood: "Imaginative · Expressive",
+    colors: ["#1E1635", "#4C1D95", "#FAF9FF", "#D946EF", "#22D3EE"]
+  },
+  {
+    name: "Creative Energy",
+    category: "Creative",
+    mood: "Expressive · Bold",
+    colors: ["#27272A", "#3F3F46", "#FFF7ED", "#F97316", "#E879F9"]
+  },
+  {
+    name: "Swiss Minimal",
+    category: "Minimal",
+    mood: "Clean · Timeless",
+    colors: ["#FFFFFF", "#F4F4F5", "#18181B", "#2563EB", "#71717A"]
+  },
+  {
+    name: "Soft Neutral",
+    category: "Minimal",
+    mood: "Quiet · Warm",
+    colors: ["#FAF7F2", "#E8E1D8", "#302C28", "#9A8067", "#B7ADA2"]
+  },
+  {
+    name: "Terracotta Table",
+    category: "Food",
+    mood: "Warm · Appetizing",
+    colors: ["#582F0E", "#7F4F24", "#FFF8EF", "#DDA15E", "#BC4749"]
+  },
+  {
+    name: "Fresh Market",
+    category: "Food",
+    mood: "Fresh · Vibrant",
+    colors: ["#283618", "#606C38", "#FEFAE0", "#DDA15E", "#BC6C25"]
+  },
+  {
+    name: "Trust Capital",
+    category: "Fintech",
+    mood: "Stable · Reliable",
+    colors: ["#0F172A", "#1E293B", "#F8FAFC", "#2563EB", "#16A34A"]
+  },
+  {
+    name: "Digital Wealth",
+    category: "Fintech",
+    mood: "Modern · Confident",
+    colors: ["#101820", "#243447", "#F2F6F9", "#00A6A6", "#D9A441"]
+  }
+];
+
+const grid = document.getElementById("paletteGrid");
+const presetSelect = document.getElementById("presetSelect");
+const toast = document.getElementById("toast");
+
+let activeFilter = "All";
+let toastTimer;
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+async function copyText(value) {
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(value);
+    } else {
+      const textarea = document.createElement("textarea");
+      textarea.value = value;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      const copied = document.execCommand("copy");
+      textarea.remove();
+      if (!copied) throw new Error("Copy unavailable");
+    }
+    showToast("Copied to clipboard");
+  } catch {
+    showToast("Copy unavailable. Select and copy manually.");
+  }
+}
+
+function renderPalettes() {
+  grid.innerHTML = "";
+
+  const filtered = palettes.filter(p =>
+    activeFilter === "All" || p.category === activeFilter
+  );
+
+  filtered.forEach(palette => {
+    const card = document.createElement("article");
+    card.className = "palette-card";
+
+    const swatches = document.createElement("div");
+    swatches.className = "swatches";
+
+    palette.colors.forEach(color => {
+      const button = document.createElement("button");
+      button.className = "swatch";
+      button.style.backgroundColor = color;
+      button.title = "Copy " + color;
+      button.setAttribute("aria-label", "Copy color " + color);
+
+      const label = document.createElement("span");
+      label.textContent = color;
+      button.appendChild(label);
+
+      button.addEventListener("click", () => copyText(color));
+      swatches.appendChild(button);
+    });
+
+    const info = document.createElement("div");
+    info.className = "palette-info";
+
+    const top = document.createElement("div");
+    top.className = "palette-top";
+
+    const heading = document.createElement("h3");
+    heading.textContent = palette.name;
+
+    const tag = document.createElement("span");
+    tag.className = "tag";
+    tag.textContent = palette.category;
+
+    top.append(heading, tag);
+
+    const description = document.createElement("p");
+    description.textContent = palette.mood + " · Click a swatch to copy its HEX code.";
+
+    const actions = document.createElement("div");
+    actions.className = "card-actions";
+
+    const copyButton = document.createElement("button");
+    copyButton.className = "small-btn";
+    copyButton.textContent = "Copy all HEX";
+    copyButton.addEventListener("click", () => copyText(palette.colors.join(", ")));
+
+    const previewButton = document.createElement("button");
+    previewButton.className = "small-btn";
+    previewButton.textContent = "Preview palette";
+    previewButton.addEventListener("click", () => applyPalette(palette));
+
+    actions.append(copyButton, previewButton);
+    info.append(top, description, actions);
+    card.append(swatches, info);
+    grid.appendChild(card);
+  });
+}
+
+function populateSelect() {
+  palettes.forEach((palette, index) => {
+    const option = document.createElement("option");
+    option.value = String(index);
+    option.textContent = palette.name + " — " + palette.category;
+    presetSelect.appendChild(option);
+  });
+}
+
+document.getElementById("filters").addEventListener("click", event => {
+  const button = event.target.closest("[data-filter]");
+  if (!button) return;
+
+  activeFilter = button.dataset.filter;
+
+  document.querySelectorAll(".filter").forEach(filter => {
+    filter.classList.toggle("active", filter === button);
+  });
+
+  renderPalettes();
+});
+
+function setPicker(id, value) {
+  document.getElementById(id).value = value;
+}
+
+function applyPalette(palette) {
+  // Map palette roles: background, surface, text, accent, button text.
+  // The fifth color is the muted color in most curated palettes.
+  const dark = isDark(palette.colors[0]);
+  const background = palette.colors[0];
+  const surface = palette.colors[1];
+  const text = dark ? "#F8FAFC" : palette.colors[2];
+  const accent = palette.colors[3];
+  const accentText = bestTextColor(accent);
+
+  setPicker("backgroundPicker", background);
+  setPicker("surfacePicker", surface);
+  setPicker("textPicker", text);
+  setPicker("accentPicker", accent);
+  setPicker("accentTextPicker", accentText);
+
+  presetSelect.value = String(palettes.indexOf(palette));
+  updatePreview();
+  document.getElementById("studio").scrollIntoView({ behavior: "smooth" });
+}
+
+function hexToRgb(hex) {
+  const match = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!match) return { r: 0, g: 0, b: 0 };
+  return {
+    r: parseInt(match[1], 16),
+    g: parseInt(match[2], 16),
+    b: parseInt(match[3], 16)
+  };
+}
+
+function isDark(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) < 145;
+}
+
+function bestTextColor(hex) {
+  const { r, g, b } = hexToRgb(hex);
+  const brightness = (0.299 * r + 0.587 * g + 0.114 * b);
+  return brightness > 160 ? "#111827" : "#FFFFFF";
+}
+
+function luminance(hex) {
+  const rgb = hexToRgb(hex);
+  const channels = [rgb.r, rgb.g, rgb.b].map(value => {
+    value /= 255;
+    return value <= 0.04045
+      ? value / 12.92
+      : Math.pow((value + 0.055) / 1.055, 2.4);
+  });
+
+  return 0.2126 * channels[0] +
+         0.7152 * channels[1] +
+         0.0722 * channels[2];
+}
+
+function contrastRatio(a, b) {
+  const l1 = luminance(a);
+  const l2 = luminance(b);
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
+}
+
+function updatePreview() {
+  const bg = document.getElementById("backgroundPicker").value;
+  const surface = document.getElementById("surfacePicker").value;
+  const text = document.getElementById("textPicker").value;
+  const accent = document.getElementById("accentPicker").value;
+  const accentText = document.getElementById("accentTextPicker").value;
+
+  const preview = document.getElementById("preview");
+  preview.style.backgroundColor = bg;
+  preview.style.color = text;
+
+  document.getElementById("previewNav").style.borderColor = text + "33";
+  document.getElementById("previewButton").style.backgroundColor = accent;
+  document.getElementById("previewButton").style.color = accentText;
+
+  document.querySelectorAll(".preview-card").forEach(card => {
+    card.style.backgroundColor = surface;
+    card.style.color = text;
+    card.style.borderColor = text + "33";
+  });
+
+  const bodyContrast = contrastRatio(text, bg);
+  const buttonContrast = contrastRatio(accentText, accent);
+
+  const bodyPass = bodyContrast >= 4.5;
+  const buttonPass = buttonContrast >= 4.5;
+
+  document.getElementById("contrastResult").textContent =
+    "Text/background contrast: " + bodyContrast.toFixed(2) + ":1 — " +
+    (bodyPass ? "Passes normal-text WCAG AA contrast." :
+    "Below the 4.5:1 normal-text WCAG AA target.") +
+    " Button contrast: " + buttonContrast.toFixed(2) + ":1 — " +
+    (buttonPass ? "Passes normal-text WCAG AA contrast." :
+    "Below the 4.5:1 normal-text WCAG AA target.") +
+    " This is a contrast check, not a complete accessibility audit.";
+}
+
+["backgroundPicker", "surfacePicker", "textPicker",
+ "accentPicker", "accentTextPicker"].forEach(id => {
+  document.getElementById(id).addEventListener("input", updatePreview);
+});
+
+presetSelect.addEventListener("change", () => {
+  const palette = palettes[Number(presetSelect.value)];
+  if (palette) applyPalette(palette);
+});
+
+document.getElementById("randomBtn").addEventListener("click", () => {
+  const palette = palettes[Math.floor(Math.random() * palettes.length)];
+  applyPalette(palette);
+  showToast("Random palette selected: " + palette.name);
+});
+
+document.getElementById("resetStudio").addEventListener("click", () => {
+  applyPalette(palettes.find(p => p.name === "SaaS Clarity"));
+  showToast("Studio reset");
+});
+
+document.getElementById("copyCss").addEventListener("click", () => {
+  const bg = document.getElementById("backgroundPicker").value;
+  const surface = document.getElementById("surfacePicker").value;
+  const text = document.getElementById("textPicker").value;
+  const accent = document.getElementById("accentPicker").value;
+  const accentText = document.getElementById("accentTextPicker").value;
+
+  const css = `:root {
+  --color-background: ${bg};
+  --color-surface: ${surface};
+  --color-text: ${text};
+  --color-primary: ${accent};
+  --color-on-primary: ${accentText};
+}`;
+
+  copyText(css);
+});
+
+populateSelect();
+renderPalettes();
+
+const defaultPalette = palettes.find(p => p.name === "SaaS Clarity");
+applyPalette(defaultPalette);
+</script>
+
 </body>
 </html>
